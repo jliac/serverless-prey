@@ -6,20 +6,24 @@ Cougar is a C# function that can be deployed to the Azure to establish a TCP rev
 
 * [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download)
 * [Terraform](https://learn.hashicorp.com/terraform/getting-started/install.html)
+* [Azure Functions Core Tools](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local)
 
 ## Deploying the Function
 
 ```bash
-cd src
-dotnet restore
-dotnet build
-dotnet publish
-cd ../terraform
+cd terraform
 terraform init
 export TF_VAR_UniqueString=$(uuidgen | cut -b 25-36 | awk '{print tolower($0)}') # Save this value for future sessions.
-terraform plan
 terraform apply
 ```
+
+You will likely get the following error on your first apply:
+
+```
+Error: Error running command 'cd ../src; func azure functionapp publish cougarYOUR_UNIQUE_STRING': exit status 1. Output: Can't find app with name "cougarYOUR_UNIQUE_STRING"
+```
+
+This means that the function app wasn't in an operable state when the function deploy command was run. Try running `terraform apply` again when this happens.
 
 ## Testing in Azure
 
@@ -52,8 +56,6 @@ terraform destroy
 ```
 
 ## Running Locally
-
-Install [Azure Functions Core Tools](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local) and run the following:
 
 ```bash
 cd src

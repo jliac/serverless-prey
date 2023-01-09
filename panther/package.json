@@ -33,7 +33,7 @@
     "eslint-config-airbnb-base": "14.0.0",
     "eslint-plugin-import": "2.19.1",
     "serverless": "1.83.0",
-    "serverless-offline": "5.12.1",
+    "serverless-offline": "12.0.4",
     "serverless-s3-sync": "1.9.2"
   },
   "dependencies": {
